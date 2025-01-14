@@ -1,0 +1,26 @@
+name: Deploy Website build to FTP
+
+on:
+  push:
+    tags:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Deploy Website
+      uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
+      with:
+        ftp_host: ${{ secrets.FTP_GRILLE_SERVER }}
+        ftp_username: ${{ secrets.FTP_GRILLE_USERNAME }}
+        ftp_password: ${{ secrets.FTP_GRILLE_PASSWORD }}
+        local_source_dir: "site"
+        dist_target_dir: "/"
+        delete: "true"
+        exclude: "'^logs/' '^README.md'"
