@@ -1,9 +1,9 @@
 name: Deploy Website build to FTP
 
 on:
-  push:
-    tags:
-      - main
+  # push:
+    # tags:
+      # - main
   workflow_dispatch:
 
 jobs:
