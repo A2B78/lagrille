@@ -13,15 +13,27 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Fetch all history for the current branch
 
-    - name: Deploy Website via Rsync to FTP
-      uses: burnett01/rsync-deployments@7.0.2
+    - name: Calculate MD5 Checksums
+      run: |
+        find site/ -type f -exec md5sum {} \; > local_md5.txt
+    
+    - name: Download remote MD5 Checksums
+      run: |
+        curl -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://185.135.132.53/remote/directory/md5.txt -o remote_md5.txt
+
+    - name: Compare MD5 Checksums
+      run: |
+        comm -3 <(sort local_md5.txt) <(sort remote_md5.txt) > diff_md5.txt
+
+    - name: Deploy Website
+      if: success()
+      uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
       with:
-        switches: -avzr --delete
-        path: site/
-        remote_host: ${{ secrets.FTP_GRILLE_SERVER }}
-        remote_user: ${{ secrets.FTP_GRILLE_USERNAME }}
-        remote_key: ${{ secrets.FTP_GRILLE_PASSWORD }}
-        remote_path: /
+        ftp_host: 185.135.132.53
+        ftp_username: lagri2478763
+        ftp_password: ${{ secrets.FTP_GRILLE_PASSWORD }}
+        local_source_dir: "site"
+        dist_target_dir: "/"
+        delete: "true"
+        exclude: "'^logs/' '^README.md'"
