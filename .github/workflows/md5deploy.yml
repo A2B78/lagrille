@@ -1,0 +1,28 @@
+name: Deploy Website build to FTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for the current branch
+
+    - name: Deploy Website via Rsync to FTP
+      uses: dferber90/rsync-deployments@v0.1
+      with:
+        switches: -avz --delete
+        path: site/
+        host: ${{ secrets.FTP_GRILLE_SERVER }}
+        username: ${{ secrets.FTP_GRILLE_USERNAME }}
+        password: ${{ secrets.FTP_GRILLE_PASSWORD }}
+        destination: /
+        exclude: 'logs/ README.md'
