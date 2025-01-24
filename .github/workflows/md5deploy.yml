@@ -25,4 +25,3 @@ jobs:
         remote_user: ${{ secrets.FTP_GRILLE_USERNAME }}
         remote_key: ${{ secrets.FTP_GRILLE_PASSWORD }}
         remote_path: /
-        exclude: 'logs/ README.md'
