@@ -17,7 +17,7 @@ jobs:
     - name: Deploy Website
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
       with:
-        ftp_host: ${{ secrets.FTP_GRILLE_SERVER }}
+        ftp_host: 185.135.132.53
         ftp_username: ${{ secrets.FTP_GRILLE_USERNAME }}
         ftp_password: ${{ secrets.FTP_GRILLE_PASSWORD }}
         local_source_dir: "site"
