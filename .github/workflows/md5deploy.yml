@@ -17,12 +17,12 @@ jobs:
         fetch-depth: 0  # Fetch all history for the current branch
 
     - name: Deploy Website via Rsync to FTP
-      uses: dferber90/rsync-deployments@v0.1
+      uses: burnett01/rsync-deployments@7.0.2
       with:
-        switches: -avz --delete
+        switches: -avzr --delete
         path: site/
-        host: ${{ secrets.FTP_GRILLE_SERVER }}
-        username: ${{ secrets.FTP_GRILLE_USERNAME }}
-        password: ${{ secrets.FTP_GRILLE_PASSWORD }}
-        destination: /
+        remote_host: ${{ secrets.FTP_GRILLE_SERVER }}
+        remote_user: ${{ secrets.FTP_GRILLE_USERNAME }}
+        remote_key: ${{ secrets.FTP_GRILLE_PASSWORD }}
+        remote_path: /
         exclude: 'logs/ README.md'
