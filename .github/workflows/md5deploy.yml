@@ -20,7 +20,7 @@ jobs:
     
     - name: Download remote MD5 Checksums
       run: |
-        curl -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://185.135.132.53/remote/directory/md5.txt -o remote_md5.txt
+        curl -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://185.135.132.53/md5.txt -o remote_md5.txt
 
     - name: Compare MD5 Checksums
       run: |
