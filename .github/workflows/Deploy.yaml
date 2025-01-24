@@ -18,7 +18,7 @@ jobs:
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
       with:
         ftp_host: 185.135.132.53
-        ftp_username: ${{ secrets.FTP_GRILLE_USERNAME }}
+        ftp_username: lagri2478763
         ftp_password: ${{ secrets.FTP_GRILLE_PASSWORD }}
         local_source_dir: "site"
         dist_target_dir: "/"
